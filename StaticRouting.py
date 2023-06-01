@@ -63,34 +63,39 @@ class NetworkTopo( Topo ):
 def run():
     "LV Netzwerke Heinemann / Linux Static Router Exercise"
     topo = NetworkTopo()
-    net = Mininet( topo=topo,
-                   waitConnected=True )  # controller is used by s1-s3
+    net = Mininet(topo=topo, waitConnected=True)
     net.start()
-    # info( '\n...adding second IP to Router r0 at interface r0-eth2\n' )
-    info( net[ 'r0' ].cmd( 'ifconfig r0-eth2 128.0.0.100' ) )
-    # info( '...adding second IP to Router r1 at interface r1-eth2\n' )
-    info( net[ 'r1' ].cmd( 'ifconfig r1-eth2 192.168.0.100' ) )
-    # info( '\n\n' )
 
-    # info( '\n*** Routing Table on Router r0:\n' )
-    info( net[ 'r0' ].cmd( 'route' ) )
-    # info( '\n*** Routing Table on Router r1:\n' )
-    info( net[ 'r1' ].cmd( 'route' ) )
+    # Add additional IP addresses to routers
+    info(net['r0'].cmd('ifconfig r0-eth2 128.0.0.100'))
+    info(net['r1'].cmd('ifconfig r1-eth2 192.168.0.100'))
 
-    # info( '\n*** Routing Table on Host h1:\n' )
-    info( net[ 'h1' ].cmd( 'route' ) )
+    # Add static routes
+    net['h1'].cmd('ip route add default via 128.0.0.100')
+    net['h2'].cmd('ip route add default via 128.0.0.100')
+    net['h3'].cmd('ip route add default via 192.168.0.100')
+    net['h4'].cmd('ip route add default via 192.168.0.100')
+    net['r0'].cmd('ip route add 128.0.0.0/16 dev r0-eth2')
+    net['r0'].cmd('ip route add 192.168.0.0/24 via 10.0.0.200')
+    net['r1'].cmd('ip route add 128.0.0.0/16 via 10.0.0.100')
+    net['r1'].cmd('ip route add 192.168.0.0/24 dev r1-eth2')
 
-    # info( '\n*** Routing Table on Host h2:\n' )
-    info( net[ 'h2' ].cmd( 'route' ) )
+    # Print routing tables
+    info('\n*** Routing Table on Router r0:\n')
+    info(net['r0'].cmd('route'))
+    info('\n*** Routing Table on Router r1:\n')
+    info(net['r1'].cmd('route'))
 
-    # info( '\n*** Routing Table on Host h3:\n' )
-    info( net[ 'h3' ].cmd( 'route' ) )
+    info('\n*** Routing Table on Host h1:\n')
+    info(net['h1'].cmd('route'))
+    info('\n*** Routing Table on Host h2:\n')
+    info(net['h2'].cmd('route'))
+    info('\n*** Routing Table on Host h3:\n')
+    info(net['h3'].cmd('route'))
+    info('\n*** Routing Table on Host h4:\n')
+    info(net['h4'].cmd('route'))
 
-    # info( '\n*** Routing Table on Host h4:\n' )
-    info( net[ 'h4' ].cmd( 'route' ) )
-
-
-    CLI( net )
+    CLI(net)
     net.stop()
 
 

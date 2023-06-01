@@ -73,21 +73,21 @@ def run():
     # info( '\n\n' )
 
     # info( '\n*** Routing Table on Router r0:\n' )
-    # info( net[ 'r0' ].cmd( 'route' ) )
+    info( net[ 'r0' ].cmd( 'route' ) )
     # info( '\n*** Routing Table on Router r1:\n' )
-    # info( net[ 'r1' ].cmd( 'route' ) )
+    info( net[ 'r1' ].cmd( 'route' ) )
 
     # info( '\n*** Routing Table on Host h1:\n' )
-    # info( net[ 'h1' ].cmd( 'route' ) )
+    info( net[ 'h1' ].cmd( 'route' ) )
 
     # info( '\n*** Routing Table on Host h2:\n' )
-    # info( net[ 'h2' ].cmd( 'route' ) )
+    info( net[ 'h2' ].cmd( 'route' ) )
 
     # info( '\n*** Routing Table on Host h3:\n' )
-    # info( net[ 'h3' ].cmd( 'route' ) )
+    info( net[ 'h3' ].cmd( 'route' ) )
 
     # info( '\n*** Routing Table on Host h4:\n' )
-    # info( net[ 'h4' ].cmd( 'route' ) )
+    info( net[ 'h4' ].cmd( 'route' ) )
 
 
     CLI( net )
